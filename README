@@ -1,0 +1,28 @@
+
+FTP/SSH Honeypot
+Autor: Sara Skutova, xskuto00@stud.fit.vutbr.cz
+Datum: 22.11.2015
+Popis: Program ma slouzit jako FTP/SSH Honeypot - bude se chovat jako FTP nebo SSH server a do daneho souboru bude ukladat zaznamy o jednotlivych uzivatelich, kteri se na dany server pokusili prihlasit. Aplikace bude dle zadanych parametru ocekavat klienta na specificke adrese a portu. Pro zajisteni konkurentnosti serveru se pouzily vlakna. Aplikace podporuje IPv4 i IPv6 protokol.
+
+Aby server plne fungoval, mel by se spoustet s pravy roota.
+
+Seznam souboru:
+    Makefile
+    fakesrv.cpp
+    manual.pdf
+    README
+
+Priklady spusteni:
+    ./fakesrv -m ssh -a 1.2.3.4 -p 22 -r ~/my_rsa.key -l ssh.log -t 5 -c 5
+    ./fakesrv -m ftp -a fe80::21e:67ff:ab1a:b1ff -p 21 -l ftp.log -c 10
+
+Parametry:
+    /fakesrv -m mode -a addr -p port -l logfile [-r rsakey] [-c maxclients] [-t maxattempts]
+
+        -m mode: urcuje zda se program spusti jako ftp nebo ssh server
+        -a addr: adresa na jake ma server naslouchat, muze byt IPv4 nebo IPv6
+        -p port: port na jakem ma server naslouchat, od 0 do 65535
+        -l logfile: logovaci soubor, pokud nebude existovat, tak se vytvori, jinak se budou nove zaznamy pridavat na konec
+        -r rsakey: Povinny pouze u SSH, urcuje soukrommy RSA klic
+        -c maxclients: pocet maximálne najednou obluhovanych klientu, musi byt vetsi nez 0
+        -t maxattempts: Nepovinny, vystupuje pouze u SSH maximalni pocet pokusu o zadani hesla
